@@ -36,7 +36,8 @@ Note: If the AIREML fails to converge to a set of feasible variance component, t
 
 ## Testing
 There are 3 different examples in test folder `input_<scenario>` for three different scenarios explained above. Three input files are provided that analyse these cases using [ASREML](https://vsni.co.uk/software/asreml "ASREML homepage"). The script `compare.sh` analyses these data with ASREML (provided it exists on the system) and the produced exectuable from `install.sh`. It then compares the estimated breeding value using
-$$(ebv_{ASREML} - ebv_{GenEval})^2$$ 
+$$\Sum (ebv_{ASREML} - ebv_{GenEval})^2$$ 
+criteria and prints out the estimated mean (and fixed effects if relevant).
 
 ## Outputs
 The software provides estimated random and fix effects and variance components in the provided files.
