@@ -13,11 +13,11 @@ In the above model, it is assumed that the residual is heterogeneous. However, n
 ### Single trait
 In the second type, the locations are ignored and the aim is to estimate breeding values for individual using a single trait model
 
-$$y{j} = mu + A_j + E_j$$
+$$y_{j} = \mu + A_j + E_j$$
 
 where $y_j$ is the phenotype of animal $j$, $A_j$ is its breeding value and $E_j$ is its residual. It is also possible to include a fixed effect in the model,
 
-$$y{j} = mu + A_j + F_j + E_j$$
+$$y_{j} = \mu + A_j + F_j + E_j$$
 
 however, only one fixed effect is allowed at the moment and the number of levels for the fixed effect `F` should be provided.
 
