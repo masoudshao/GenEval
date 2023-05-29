@@ -28,7 +28,7 @@ subroutine getEffects(nobs, maxid, nfix, nvar, nran, theta, Gmatrix, Vhat,&
   call dgemm('n', 'n', nfix, 1, nobs, ONE, Vhat, nfix, y, nobs, ZERO, fixeff, nfix)
   if (verbose) write(STDOUT, *) "  Fixed effects estimated"
 
-  allocate(theZPy(nran))
+  call alloc1D(theZPy,nran,"theZPy", "getEffects")
   if (nran == 1) then
      call alloc1D(theZPy(1)%array, maxid, "theZPy(1)%array", "getEffects")
      theZPy(1)%array(1:maxid) = ZERO

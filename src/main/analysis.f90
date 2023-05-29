@@ -55,8 +55,8 @@ program analysis
   elseif (nran .eq. 1) then
      call askInteger(nfix, "Number of fix effects (excluding mean)")
      if (nfix > 0) then
-        call alloc1I(levels, nfix, "levels", "analysis")
-        call alloc1I(prelevel, nfix + 1, "prelevel", "analysis")
+        call alloc1D(levels, nfix, "levels", "analysis")
+        call alloc1D(prelevel, nfix + 1, "prelevel", "analysis")
         prelevel(1) = 0
         j = 0
         do i = 1, nfix
@@ -88,9 +88,9 @@ program analysis
 
   ! allocating y (phenotypes) and id (real(KINDR) id of animals) and incidience matrix
   call alloc1D(y, nobs, "y", "analysis")
-  call alloc1I(id, nobs, "id", "analysis")
+  call alloc1D(id, nobs, "id", "analysis")
   j = nfix  - 1 ! because of singularity that happens if j=nfix 
-  call alloc2I(Xtemp, nobs, j, "Xtemp", "analysis")
+  call alloc2D(Xtemp, nobs, j, "Xtemp", "analysis")
 
   ! reading the data
   open(newUnit = phenFileID, file = phenFile, status = 'old')
@@ -151,7 +151,7 @@ program analysis
   close(AmatFileID)
 
   call alloc1D(fixeff, nfix, "fixeff", "analysis")
-  allocate(raneff(nran))
+  call alloc1D(raneff, nran, "raneff", "analysis")
   call alloc1D(raneff(1)%array, maxid, "raneff(1)%array", "analysis") ! slope effect (genetic)
   if (nran == 3) then
      call alloc1D(raneff(2)%array, maxid, "raneff(2)%array", "analysis") ! intercept effect (genetic)
@@ -218,7 +218,8 @@ program analysis
         write(STDOUT, '(2x,a30)') "correlation taken into account"
      end if
   elseif (nran == 1) then
-     allocate(oldtheta(2), theta(2))
+     call alloc1D(oldtheta, 2, "oldtheta", "analysis")
+     call alloc1D(theta, 2, "theta", "analysis")
      val1 = sum(y) / size(y)
      val2 = sum((y - val1) ** 2) / (size(y) - 1)
      write(STDOUT, '(a27)') "initial guess for"
@@ -240,7 +241,7 @@ program analysis
 
   call alloc2D(Vhat, nfix, nobs, "Vhat", "analysis")
   call alloc2D(temp, nobs, nfix, "temp", "analysis")
-  call alloc1I(ipiv, nobs, "ipiv", "analysis")
+  call alloc1D(ipiv, nobs, "ipiv", "analysis")
   call alloc1D(py, nobs, "Py", "analysis")
 
   if (doreml == 1) then

@@ -1,6 +1,6 @@
 subroutine getGmatrix(nanim, nChr, nSNP, ident, genome, SNPlist, &
      chr_nlocibefore, iscaled, ivar, imiss, addDom, Amat, verbose)
-  use constants, only : KINDR, alloc1D, alloc1I, alloc2I, STDERR, STDOUT,&
+  use constants, only : KINDR, alloc1D, alloc2D, STDERR, STDOUT,&
       chromosome, NBITS
   implicit none
 
@@ -45,13 +45,13 @@ subroutine getGmatrix(nanim, nChr, nSNP, ident, genome, SNPlist, &
   end do
   totalSNP = nSNP * nChr
   if (.not.allocated(pruningSNP)) then
-     call alloc1I(pruningSNP, totLoci, "pruningSNP", "GetGmatrix")
+     call alloc1D(pruningSNP, totLoci, "pruningSNP", "GetGmatrix")
      pruningSNP(1:totLoci) = 0
      do iChr = 1, nchr
         pruningSNP(chr_nlociBefore(iChr) + SNPlist(iChr, :)) = 1
      end do
   end if
-  call alloc2I(genotype, nanim, totalSNP, "genotype", "GetGmatrix")
+  call alloc2D(genotype, nanim, totalSNP, "genotype", "GetGmatrix")
 
   do id = 1, nanim
      k = 0
@@ -111,7 +111,7 @@ subroutine getGmatrix(nanim, nChr, nSNP, ident, genome, SNPlist, &
      call bsribscalc1(genotype, amat, nanim, i, totalSNP, effect, iscaled,&
           ivar, ifail, verbose)
   else
-     call alloc1I(usedSNPMAT, i, "usedSNPMat", "GetGmatrix")
+     call alloc1D(usedSNPMAT, i, "usedSNPMat", "GetGmatrix")
      call alloc1D( cumvarMAT, i, "cumVarMat", "GetGmatrix")
      call bsribscalc1a(genotype, amat, nanim, i, totalSNP, effect, iscaled,&
           ivar, usedSNPMAT, cumvarMAT, ifail, verbose)
